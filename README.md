@@ -6,21 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <link rel="stylesheet" href="jemdoc.css" type="text/css" />
 <link rel="stylesheet" href="custom.css" type="text/css" />
-<title>POD-based background removal for Particle Image Velocimetry</title>
 </head>
 <body>
 <table summary="Table for page layout." id="tlayout">
 <tr valign="top">
-<td id="layout-menu">
-<div class="menu-category">POD-based Background Removal</div>
-<div class="menu-item"><a href="index.html" class="current">Index</a></div>
-<div class="menu-item"><a href="paper.html">Paper</a></div>
-<div class="menu-item"><a href="download.html">Download</a></div>
-<div class="menu-item"><a href="bugreport.html">Bug&nbsp;report</a></div>
-<div class="menu-item"><a href="feedback.html">Contact</a></div>
-<div class="menu-category">Applications</div>
-<div class="menu-item"><a href="synthetic.html">Synthetic&nbsp;images</a></div>
-</td>
 <td id="layout-content">
 <div id="toptitle">
 <h1>POD-based background removal for Particle Image Velocimetry</h1>
@@ -33,7 +22,7 @@
 <p><sup>c</sup> Department of Aerospace Engineering, <i>University of Bristol</i>, University Walk, BS81TR, Bristol, UK</p>
 </td></tr></table>
 <h2>Objective</h2>
-<p>This website provides an <a href="download.html">implementation</a> of the POD-based background removal algorithm described in the paper <a href="paper.html"><i>POD-based background removal for Particle Image Velocimetry</i></a>. The method consists in approximating the background noise source and the PIV particle pattern with reduced order models (ROM) constructed from different portions of the video sequence’s POD spectra. Particles images and background noise are therefore distinguished according to a novel criterion: the higher degree of correlation of the background noise compared to the one of the particle pattern. Correlated background noise can be well approximated by a few of the first POD modes of the video, while the PIV particle pattern is equally distributed along the entire POD spectra. The proposed method is therefore a POD filter, which automatically identifies &ndash;and remove&ndash; the minimal number of modes representing the background noise.</p>
+<p>This website provides an <a href="download.MD">implementation</a> of the POD-based background removal algorithm described in the paper <a href="paper.MD"><i>POD-based background removal for Particle Image Velocimetry</i></a>. The method consists in approximating the background noise source and the PIV particle pattern with reduced order models (ROM) constructed from different portions of the video sequence’s POD spectra. Particles images and background noise are therefore distinguished according to a novel criterion: the higher degree of correlation of the background noise compared to the one of the particle pattern. Correlated background noise can be well approximated by a few of the first POD modes of the video, while the PIV particle pattern is equally distributed along the entire POD spectra. The proposed method is therefore a POD filter, which automatically identifies &ndash;and remove&ndash; the minimal number of modes representing the background noise.</p>
 <h2>POD Decomposition of PIV image recordings</h2>
 <p>Let a PIV image sequence be composed of <img class="eq" src="eqs/1403124344-130.png" alt="n_t" style="vertical-align: -4px" /> grayscale images <img class="eq" src="eqs/1121153395-130.png" alt="Im(i,j)in mathbb{R}^{n_xtimes n_y}" style="vertical-align: -5px" /> having a resolution of <img class="eq" src="eqs/199924934-130.png" alt="n_p=n_x n_y" style="vertical-align: -6px" /> pixels. By reshaping each image into a column vector <img class="eq" src="eqs/593408283-130.png" alt="s_iin mathbb{R}^{n_ptimes 1}" style="vertical-align: -4px" />, it is possible to assemble the sequence into a snapshots matrix <img class="eq" src="eqs/1620868007-130.png" alt="X" style="vertical-align: -0px" />:</p>
 
