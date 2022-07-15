@@ -1,0 +1,39 @@
+# jemdoc: menu{MENU}{paper.html}
+# jemdoc: addpackage{amsfonts}
+# jemdoc: addcss{custom.css}
+= POD-based background removal for Particle Image Velocimetry
+
+*[mendez@vki.ac.be M.A. Mendez]{{<sup>a</sup>}}, M. Raiola{{<sup>b</sup>}}, A. Masullo{{<sup>c</sup>}}, S. Discetti{{<sup>b</sup>}}, A. Ianiro{{<sup>b</sup>}}, R. Theunissen{{<sup>c</sup>}}, J.-M.Buchlin{{<sup>a</sup>}}*
+
+{{<sup>a</sup>}} /von Karman Institute for Fluid Dynamics/, Waterloosesteenweg 72, Sint-Genesius-Rode, Belgium
+{{<sup>b</sup>}} Aerospace Engineering Group, /Universidad Carlos III de Madrid/, Av. de la Universidad 30, Leganés, Spain
+{{<sup>c</sup>}} Department of Aerospace Engineering, /University of Bristol/, University Walk, BS81TR, Bristol, UK
+
+== Abstract
+
+We propose a novel image preprocessing method for Particle Image Velocimetry (PIV), to remove background noise
+sources such as time dependent light reflection, light nonuniformities or camera dark noise. The method is based on
+the Proper Orthogonal Decomposition (POD) of the video sequence. In particular, it is shown that the PIV particle
+pattern is recovered by filtering out few of the first POD modes of the video, which are representative of typical
+background noise sources in PIV. After describing the theoretical framework of the proposed POD filter, the method
+is tested on synthetic and experimental images, and compared with well-known pre-processing techniques in terms
+of image amelioration, computational cost, and improvements in the PIV interrogation. The results show that the
+proposed method is insensitive to background noise intensity, gradients, and temporal oscillations contrary to existing
+methods. The computational cost is orders of magnitude lower than popular image recontrasting techniques such as
+CLAHE or min/max.
+
+== Reference
+
+*POD-based background removal for Particle Image Velocimetry*\n
+M.A. Mendez, M. Raiola, A. Masullo, S. Discetti, A. Ianiro, R. Theunissen, J.-M.Buchlin\n
+/Experimental Thermal and Fluid Science/, Volume 80, January 2017, Pages 181–192.
+
+[./science.bib Download BibTeX]
+
+== Download paper
+
+The paper can be download at the following link:\n
+[http://www.sciencedirect.com/science/article/pii/S0894177716302266 http:\/\/www.sciencedirect.com\/science\/article\/pii\/S0894177716302266]
+
+
+

@@ -1,0 +1,113 @@
+# jemdoc: menu{MENU}{index.html}
+# jemdoc: addpackage{amsfonts}
+# jemdoc: addcss{custom.css}
+= POD-based background removal for Particle Image Velocimetry
+
+~~~
+{}{img_left}{./figures/header.png}{POD background removal}{500px}
+*[mendez@vki.ac.be M.A. Mendez]{{<sup>a</sup>}}, M. Raiola{{<sup>b</sup>}}, A. Masullo{{<sup>c</sup>}}, S. Discetti{{<sup>b</sup>}}, A. Ianiro{{<sup>b</sup>}}, R. Theunissen{{<sup>c</sup>}}, J.-M.Buchlin{{<sup>a</sup>}}*
+
+{{<sup>a</sup>}} /von Karman Institute for Fluid Dynamics/, Waterloosesteenweg 72, Sint-Genesius-Rode, Belgium
+{{<sup>b</sup>}} Aerospace Engineering Group, /Universidad Carlos III de Madrid/, Av. de la Universidad 30, Leganés, Spain
+{{<sup>c</sup>}} Department of Aerospace Engineering, /University of Bristol/, University Walk, BS81TR, Bristol, UK
+~~~
+
+== Objective
+
+This website provides an [download.html implementation] of the POD-based background removal algorithm described in the paper [paper.html /POD-based background removal for Particle Image Velocimetry/]. The method consists in approximating the background noise source and the PIV particle pattern with reduced order models (ROM) constructed from different portions of the video sequence’s POD spectra. Particles images and background noise are therefore distinguished according to a novel criterion: the higher degree of correlation of the background noise compared to the one of the particle pattern. Correlated background noise can be well approximated by a few of the first POD modes of the video, while the PIV particle pattern is equally distributed along the entire POD spectra. The proposed method is therefore a POD filter, which automatically identifies --and remove-- the minimal number of modes representing the background noise.
+
+== POD Decomposition of PIV image recordings
+
+Let a PIV image sequence be composed of $n_t$ grayscale images $Im(i,j)\in \mathbb{R}^{n_x\times n_y}$ having a resolution of $n_p=n_x n_y$ pixels. By reshaping each image into a column vector $s_i\in \mathbb{R}^{n_p\times 1}$, it is possible to assemble the sequence into a snapshots matrix $X$:
+
+\((1)\quad X=\{ s_1, s_2, \dots s_{n_t}\} \in  \mathbb{R}^{n_p\times n_t}\)
+
+The scope of low dimensional modeling of matrix $X$ is to find the approximation $\tilde X \in \mathbb{R}^{n_p\times n_t}$ of rank $r<n_t$ minimizing the $L_2$ norm ($||\cdot||$) of the error matrix $E_r$:
+
+\(
+(2)\quad min(E_r)=min \biggl (|| X-\tilde X||_2 \biggl ) \,.
+\)
+
+The solution to this minimization problem, given by the Eckart-Young theorem, is the $r$ truncated singular value decomposition of the original matrix:
+
+\(
+(3)\quad \tilde X=\Phi_r \,  \Sigma_r \, { \Psi^T_r} \rightarrow \tilde s_i=\sum_{k=1}^{r}\phi_k  \sigma_k  \psi_k^{i} \, ,
+\)
+  
+
+with $\Phi_r=[\phi_1,\dots\phi_{r}] \in \mathbb{R}^{n_p\times r}$ the orthonormal basis for the columns of $X$, $\Psi_r=[\psi_1,\dots\psi_{r}]\in \mathbb{R}^{n_t\times r}$ the orthonormal basis for the rows of $X$, and $\Sigma_r=diag(\sigma_1\dots\sigma_r)\in \mathbb{R}^{r\times r}$ the diagonal matrix containing the norm of each contribution.
+
+In low rank modeling for video analysis, the images forming the spatial basis $\phi$ are referred to as /eigenbackgrounds/. By definition, the $\phi_k$ are eigenvectors of the outer product matrix $C=X X^T \in \mathbb{R}^{n_p\times n_p}$ and the $\psi_k$ are eigenvectors of the inner product matrix $K=X^T X\in \mathbb{R}^{n_t\times n_t}$, while the singular values $\sigma_k$ are the square root of the corresponding eigenvalues $\lambda_k$;
+
+\(
+(4a)\quad C=X\,X^T=\bigl( \Phi \Sigma  \Psi^T\bigr)\bigl( \Psi \Sigma  \Phi^T \bigr)= \Phi{\Lambda} \Phi^T
+\)
+\(
+(4b)\quad K=X^T \,X=\bigl(  \Psi  \Sigma  \Phi^T \bigr) \bigl(  \Phi  \Sigma  \Psi^T\bigr)=  \Psi {\Lambda}  \Psi^T 
+\)
+
+The solutions to the eigenvalue problems expressed in eq.s (4a) and (4b) are the discrete versions of the Fredholm Equations, leading, respectively, to the definitions of standard POD (preferable when $n_p\ll n_t$) or the Snapshot POD (preferable when $n_t\ll n_p$). It should be noted that both definitions are common in the analysis of turbulent flows where instead of intensities, element entries of column vectors $s_i$ refer to velocities. 
+
+Observing that ${X} {\Psi}_r={ \Phi}_r  {\Sigma}_r $, eq. (3) can be also written as:
+
+\(
+(5)\quad {\tilde X}= \Phi_{r} \,  \Phi_{r}^T \,  {X} \rightarrow \tilde s_i=\sum_{k=1}^{r}\bigl( \phi_k^T s_i\bigr) \phi_k \, .
+\)
+
+This form of the equation, with no emphasis on the temporal evolution of the modes, describes the decomposition as the projection of the data set (of rank $n_t$) into a lower dimensional space (of rank $r<n_t$) spanned by the orthonormal basis images $ \Phi_r=[\phi_1,\dots\phi_{r}]$. This formulation is common in Principal Component Analysis where it is introduced in the framework of variance maximization or minimal error of the approximation matrix $\tilde X$. 
+
+The POD image preprocessing proposed in this work considers a PIV sequence as the sum of an ideal sequence $X_p$ (i.e. bright particle images superimposed onto a black background) and a background noise sequence $X_b$, each having their own singular value decomposition:
+
+\(
+(6)\quad X={\Phi} {\Sigma} {\Psi}^T=X_p+X_b={\Phi}_p {\Sigma}_p {\Psi}_p^T +{\Phi}_b {\Sigma}_b {\Psi}_b^T \,\,,
+\)
+
+with $\Phi_p=[\phi_{p1},\dots, \phi_{p n_t}]$ and $\Phi_b=[\phi_{b1},\dots, \phi_{b n_t}]$ the eigenbackgrounds of ${X_p}$ and ${X_b}$. Typical background noise in PIV has a high degree of spatial and temporal correlation, resulting in multiple rows and columns of $X_b$ being similar to each others. Therefore, the matrix $X_b$ is close to be rank deficient and can be well captured by few ($r\ll n_t$) of its modes, such that
+
+\(
+(7)\quad X_b\approx \tilde{X}_b=\sum_{k=1}^{r}\phi_{bk}\sigma_{bk}\psi^T_{bk} \, | \, \,\sigma_{bk}\approx 0 \, \forall k>r \ll n_t \, \,,
+\)
+
+with $rank(\tilde{X}_b)={r\ll n_t}$. It is worth observing that, besides allowing for the background noise to be time dependent --contrary to simple levelization approaches-- the proposed method also allows for the video sequence to be temporally unresolved --contrary to time filtering approaches--.
+
+A temporally unresolved sequence can in fact be constructed from column permutation of a time-resolved sequence, and the SVD decomposition in eq. (3) --thus the approximation in eq. (7)-- is invariant under column permutation of the decomposed matrix.
+
+
+From eq.s (6-7), the proposed method consist in constructing an approximation of $X_p$ and $X_b$ using the POD modes of $X$. The method is based upon two assumptions, which are justified in the reference paper:
+
+: {*Assumption 1*} For ${k>r}$, the contribution of the ideal PIV sequence $X_p$ is equally distributed, such that $\sigma_{pk}\approx \sigma_{pk+1} \, \forall k\in [r, n_t]$.
+: {*Assumption 2*} For ${k>r}$, the decomposition of the video $X$ is aligned with that of the ideal PIV sequence $X_p$, such that $\sigma_{k}\approx \sigma_{pk} \, \forall k\in [r, n_t]$.
+
+== Proposed Algorithm
+
+Since $r\ll n_t$ and $\sigma_{pk}\approx \sigma_{pk+1}$ (Assumption 1), it is possible to approximate the ideal PIV video sequence $X_p$ underlying the video sequence $X$  (eq. (6)) filtering out its first $r$ POD modes:
+
+\(
+X_p= \sum_{k=1}^{n_t} \phi_{pk} \sigma_{pk} \psi_{pk}^T\approx\tilde{X}_p=\sum_{k=r+1}^{n_t} \phi_{pk} \sigma_{pk} \psi_{pk}^T \,\, .
+\)
+
+Moreover, since $\sigma_{k}\approx \sigma_{pk} \, \forall k\in [r, n_t]$ (Assumption 2), it is reasonable to expect the decomposition of $X$ to be aligned with that of $X_p$ for $k>r$. Therefore, using eq. (5} yields:
+
+\(
+\tilde{X}_p\approx \tilde{X}=\sum_{k=r+1}^{n_t} \phi_{k} \sigma_{k} \psi_{k}^T =\tilde {\Phi} \tilde {\Phi}^T X ,
+\)
+
+where $\tilde {\Phi}=[\phi_{r+1},\dots \phi_{n_t}]$ is the basis for the reduced order model of $X_p$. In addition to the equality of singular values,  the modes approximating the PIV pattern should have a temporal $\psi_k$, for ${k>r}$, orthonormal to $\psi_{p1}=\underline{1}$, i.e. $\langle \psi_{k},\underline{1} \rangle=\sum_{j=1}^{n_t} \psi^j_{k}=0$, as discussed in the paper. These two constraints are used to identify the $[r+1,n_t]$ POD modes approximating the PIV pattern, to be retained in the preprocessing. Then, the method consists in constructing the reduced basis onto which project the set of images. If significant light variations appear between two frames $a$ and $b$, the method should be applied independently on the two series of camera exposures. The pseudo-code of the proposed method is summarized in the following algorithm, where the tolerances in line 7 are set as $\varepsilon_1=0.01\sigma_{pk}=0.01\sqrt{n_p}\sigma_{sp}$ and $\varepsilon_2=0.01$:
+
+. /Reshape Images $Im\in \mathbb{R}^{n_x\times n_y}$ in $s_i\in \mathbb{R}^{n_p\times 1}$}$/
+. /Assemble Matrix $X\in \mathbb{R}^{n_p\times n_t}$}$/
+. /Compute $K=X^T X$}$/
+. /Diagonalize $K=\Psi \, \Sigma^2 \, \Psi^T$ }$/
+. /Compute $\Phi=X \, \Psi \, \Sigma^{-1}$}$/
+. /Find $r:$ $\sigma_{k+1}-\sigma_k<\varepsilon_1 \, \& \, \langle \underline{1}, \psi_{pk}\rangle < \varepsilon_2 \,\, \forall k>r$}$\label{line}/
+. /Construct $\tilde{\Phi}=[\phi_{r+1},\dots \phi_{n_t}]$}$/
+. /Compute $\tilde{X}=\tilde{\Phi}\tilde{\Phi}^T X$ with $\tilde{X}=[\tilde{x_1},\dots \tilde{x_{n_t}}]$}$/
+. /Reshape $\tilde{s}_i\in \mathbb{R}^{n_p\times 1}$ back to $\tilde{Im}\in \mathbb{R}^{n_x\times n_y}$}$/
+
+\n
+~~~
+{}{img_left}{./figures/psi_sigma.png}{Analysis of statistical convergence on synthetic PIV images}
+ 
+~~~
+
+/Analysis of statistical convergence on synthetic PIV images with source density $N_S=0.02$ and $N_S=0.9$./

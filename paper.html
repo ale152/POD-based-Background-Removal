@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="jemdoc.css" type="text/css" />
+<link rel="stylesheet" href="custom.css" type="text/css" />
+<title>POD-based background removal for Particle Image Velocimetry</title>
+</head>
+<body>
+<table summary="Table for page layout." id="tlayout">
+<tr valign="top">
+<td id="layout-menu">
+<div class="menu-category">POD-based Background Removal</div>
+<div class="menu-item"><a href="index.html">Index</a></div>
+<div class="menu-item"><a href="paper.html" class="current">Paper</a></div>
+<div class="menu-item"><a href="download.html">Download</a></div>
+<div class="menu-item"><a href="bugreport.html">Bug&nbsp;report</a></div>
+<div class="menu-item"><a href="feedback.html">Contact</a></div>
+<div class="menu-category">Applications</div>
+<div class="menu-item"><a href="synthetic.html">Synthetic&nbsp;images</a></div>
+</td>
+<td id="layout-content">
+<div id="toptitle">
+<h1>POD-based background removal for Particle Image Velocimetry</h1>
+</div>
+<p><b><a href="mailto:mendez@vki.ac.be">M.A. Mendez</a><sup>a</sup>, M. Raiola<sup>b</sup>, A. Masullo<sup>c</sup>, S. Discetti<sup>b</sup>, A. Ianiro<sup>b</sup>, R. Theunissen<sup>c</sup>, J.-M.Buchlin<sup>a</sup></b></p>
+<p><sup>a</sup> <i>von Karman Institute for Fluid Dynamics</i>, Waterloosesteenweg 72, Sint-Genesius-Rode, Belgium</p>
+<p><sup>b</sup> Aerospace Engineering Group, <i>Universidad Carlos III de Madrid</i>, Av. de la Universidad 30, Leganés, Spain</p>
+<p><sup>c</sup> Department of Aerospace Engineering, <i>University of Bristol</i>, University Walk, BS81TR, Bristol, UK</p>
+<h2>Abstract</h2>
+<p>We propose a novel image preprocessing method for Particle Image Velocimetry (PIV), to remove background noise
+sources such as time dependent light reflection, light nonuniformities or camera dark noise. The method is based on
+the Proper Orthogonal Decomposition (POD) of the video sequence. In particular, it is shown that the PIV particle
+pattern is recovered by filtering out few of the first POD modes of the video, which are representative of typical
+background noise sources in PIV. After describing the theoretical framework of the proposed POD filter, the method
+is tested on synthetic and experimental images, and compared with well-known pre-processing techniques in terms
+of image amelioration, computational cost, and improvements in the PIV interrogation. The results show that the
+proposed method is insensitive to background noise intensity, gradients, and temporal oscillations contrary to existing
+methods. The computational cost is orders of magnitude lower than popular image recontrasting techniques such as
+CLAHE or min/max.</p>
+<h2>Reference</h2>
+<p><b>POD-based background removal for Particle Image Velocimetry</b><br />
+M.A. Mendez, M. Raiola, A. Masullo, S. Discetti, A. Ianiro, R. Theunissen, J.-M.Buchlin<br />
+<i>Experimental Thermal and Fluid Science</i>, Volume 80, January 2017, Pages 181–192.</p>
+<p><a href="./science.bib">Download BibTeX</a></p>
+<h2>Download paper</h2>
+<p>The paper can be download at the following link:<br />
+<a href="http://www.sciencedirect.com/science/article/pii/S0894177716302266">http://www.sciencedirect.com/science/article/pii/S0894177716302266</a></p>
+<div id="footer">
+<div id="footer-text">
+Page generated 2017-09-19 19:12:12 GMT Daylight Time, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>

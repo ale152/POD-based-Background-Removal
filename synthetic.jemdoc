@@ -1,0 +1,9 @@
+# jemdoc: menu{MENU}{download.html}
+# jemdoc: addpackage{amsfonts}
+# jemdoc: addcss{custom.css}
+= Download synthetic images
+
+The synthetic images adopted in the paper can be downloaded at the following link:
+
+[Synthetic_Images.7z Download synthetic images].
+

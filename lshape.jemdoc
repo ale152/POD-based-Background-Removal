@@ -1,0 +1,23 @@
+# jemdoc: menu{MENU}{lshape.html}
+# jemdoc: addpackage{amsfonts}
+# jemdoc: addcss{custom.css}
+= Variable light reflection in a L-shape profile
+
+The following example is an application of the POD-based background removal tool. The set of images is a sequence recorded at the wind tunnel facilities of the University of Bristol during a demonstration of the PIV system with students.
+
+~~~
+{}{img_left}{./figures/lshape_seq.png}{Sequence of PIV images}{1280px}
+First 8 sample images of the set used for this analyis.
+~~~
+
+A total number of 1500 images was used for the background removal. For this case, using and epsilon sensitivity of 0.0001, the automatic number of modes suggested for the removal was 4.
+
+~~~
+{}{img_left}{./figures/Lshape_avg.png}{Sequence of PIV images}{1280px}
+First 8 sample images of the set used for this analyis.
+~~~
+
+~~~
+{}{img_left}{./figures/Lshape_mod.png}{Sequence of PIV images}{1280px}
+First 8 sample images of the set used for this analyis.
+~~~
